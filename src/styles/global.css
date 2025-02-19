@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+
+/* Custom Fonts */
+/* @font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-var-latin.woff2') format('woff2');
+} */
+
+/* Theme Colors */
+:root {
+  color-scheme: light;
+  
+  /* Primary Colors */
+  --color-primary: #40B4C7;
+  --color-primary-hover: #2C7F8C;
+  --color-primary-light: #7DD3E0;
+  --color-primary-dark: #1A4B53;
+  
+  /* Background Colors */
+  --color-background: #FFFFFF;
+  --color-background-alt: #F3F4F6;
+  --color-background-hover: #E5E7EB;
+  
+  /* Text Colors */
+  --color-text: #1f3637;
+  --color-text-light: #4B5563;
+  --color-text-lighter: #6B7280;
+  
+  /* Border Colors */
+  --color-border: #0075a7;
+  --color-border-hover: #dbd7d1;
+  
+  /* Scrollbar Colors */
+  --scrollbar-color: var(--color-primary);
+  --scrollbar-hover: var(--color-primary-hover);
+  
+  /* Shadow Colors */
+  --color-shadow: rgba(210, 13, 13, 0.1);
+  --color-shadow-strong: rgba(0, 0, 0, 0.25);
+}
+
+:root.dark {
+  color-scheme: dark;
+  
+  /* Primary Colors */
+  --color-primary: #7DD3E0;
+  --color-primary-hover: #5BA3AD;
+  --color-primary-light: #A5E4ED;
+  --color-primary-dark: #3bb7ca;
+  
+  /* Background Colors */
+  --color-background: #111827;
+  --color-background-alt: #1F2937;
+  --color-background-hover: #374151;
+  
+  /* Text Colors */
+  --color-text: #F9FAFB;
+  --color-text-light: #E5E7EB;
+  --color-text-lighter: #D1D5DB;
+  
+  /* Border Colors */
+  --color-border: #374151;
+  --color-border-hover: #4B5563;
+  
+  /* Scrollbar Colors */
+  --scrollbar-color: var(--color-primary);
+  --scrollbar-hover: var(--color-primary-dark);
+  
+  /* Shadow Colors */
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-shadow-strong: rgba(0, 0, 0, 0.5);
+}
+
+/* Global Transitions */
+*, *::before, *::after {
+  transition: background-color 0.1s ease-out,
+              border-color 0.1s ease-out,
+              color 0.1s ease-out,
+              fill 0.1s ease-out,
+              stroke 0.1s ease-out,
+              opacity 0.1s ease-out,
+              box-shadow 0.1s ease-out;
+}
+
+.preload * {
+  transition: none !important;
+}
+
+/* Layout */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border-radius: 5px;
+  opacity: 0.8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+  opacity: 1;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+/* Component Styles */
+/* Navigation */
+.nav-link {
+  transition: color 0.3s ease;
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+}
+
+/* Projects Section */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-arrow {
+  transition: all 0.3s ease;
+}
+
+.scroll-arrow:not(:disabled):hover {
+  transform: translateY(-50%) scale(1.1);
+  background-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.category-filter.active {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+/* Skills Section */
+.skill-button:hover img {
+  transform: scale(1.1);
+}
+
+.skill-button img {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Project Cards */
+.project-card {
+  background-color: var(--color-background);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--color-shadow);
+  transition: box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 6px var(--color-shadow-strong);
+}
+
+.project-card img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-shadow-strong);
+  transition: opacity 0.2s ease;
+}
+
+.modal-container {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.modal-content {
+  position: relative;
+  transform: translateY(0);
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: var(--color-background);
+  box-shadow: 0 20px 25px -5px var(--color-shadow-strong);
+  transition: all 0.3s ease;
+}
+
+/* Footer */
+.footer-social-link {
+  color: var(--color-text-lighter);
+  transition: color 0.2s ease;
+}
+
+.footer-social-link:hover {
+  color: var(--color-primary);
+}
+
+/* Theme Toggle */
+.theme-toggle-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle-icon.active {
+  transform: rotate(180deg);
+}
+
+/* Language Toggle */
+.language-toggle {
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-background-alt);
+  transition: background-color 0.2s ease;
+}
+
+.language-toggle:hover {
+  background-color: var(--color-background-hover);
+}
+
+/* Form Elements */
+.form-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.form-button {
+  width: 100%;
+  padding: 0.75rem 2rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.form-button:hover {
+  background-color: var(--color-primary-hover);
+}
