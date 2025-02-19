@@ -53,3 +53,13 @@ export interface Skill {
 }
 
 
+
+export interface SkillFromDB {
+  id: string;
+  name: string;
+  icon_url: string;
+  category: string;
+  description_en: string;
+  description_es: string;
+}
+
