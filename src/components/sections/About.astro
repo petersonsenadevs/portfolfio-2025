@@ -1,0 +1,50 @@
+---
+import Image from "astro/components/Image.astro"
+import petercover from '../../assets/petercover.jpg';
+import yo from '../../assets/yo.jpg';
+
+import { translations } from '../../i18n/translations';
+
+---
+<section id="about" class="py-20 ">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4 min-h-[36px]">
+        <span class="en">{translations.about.title.en}</span>
+        <span class="es hidden">{translations.about.title.es}</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <div class="min-h-[300px]"> <!-- Fixed height container for text content -->
+          <div class="en">
+            <h3 class="text-2xl font-semibold mb-4">Hello! I'm Peterson Sena</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+            {translations.about.description.en}
+            </p>
+            <p class="text-gray-600 dark:text-gray-400 mt-4">
+              {translations.about.description2.en}
+            </p>
+          </div>
+          <div class="es hidden">
+            <h3 class="text-2xl font-semibold mb-4">¡Hola! Soy Peterson Sena</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              {translations.about.description.es}
+            </p>
+            <p class="text-gray-600 dark:text-gray-400 mt-4">
+              {translations.about.description2.es}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="relative ">
+        <img-comparison-slider class=" slider-with-animated-handle  w-full h-full min-h-[300px]" value="55.5" hover="true">
+          <img slot="first" class="w-full h-full object-cover" src={petercover.src} />
+          <img slot="second" class="w-full h-full object-cover" src={yo.src} />
+        </img-comparison-slider>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
