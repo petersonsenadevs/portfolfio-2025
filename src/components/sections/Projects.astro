@@ -1,0 +1,281 @@
+---
+const categories = [
+  { value: "all", label: { en: "All", es: "Todos" } },
+  { value: "web", label: { en: "Web", es: "Web" } },
+  { value: "backend", label: { en: "Backend", es: "Backend" } },
+  { value: "mobile", label: { en: "Mobile", es: "Móvil" } }
+];
+---
+
+<section id="projects" class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4 min-h-[36px]">
+        <span class="en">My Projects</span>
+        <span class="es hidden">Mis Proyectos</span>
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6 min-h-[28px]">
+        <span class="en">Some of my recent work</span>
+        <span class="es hidden">Algunos de mis trabajos recientes</span>
+      </p>
+      
+      <!-- Mobile dropdown for categories -->
+      <div class="md:hidden mb-6">
+        <select
+          class="category-select w-full px-4 py-2 rounded-lg border-2 "
+        >
+          {categories.map(category => (
+            <option value={category.value}>
+              {category.label.en}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <!-- Desktop category buttons -->
+      <div class="hidden md:flex justify-center gap-4 mb-12">
+        {categories.map(category => (
+          <button
+            class="category-filter px-4 py-2 rounded-lg border-2 border-primary-light dark:border-primary-dark hover:bg-primary-light  dark:hover:bg-primary-dark transition-colors min-w-[100px]"
+            data-category={category.value}
+          >
+            <span class="en">{category.label.en}</span>
+            <span class="es hidden">{category.label.es}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="relative group">
+      <button
+        class="scroll-arrow left-arrow absolute left-0 top-1/2 -translate-y-1/2 z-20  p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30"
+        disabled
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        class="scroll-arrow right-arrow absolute right-0 top-1/2 -translate-y-1/2 z-20  p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      
+
+      <div class="overflow-x-auto scrollbar-hide scroll-smooth" id="projects-grid">
+        <div class="flex gap-6 pb-4" style="min-width: min-content" id="projects-container">
+          <!-- Projects will be loaded dynamically -->
+          <div class="flex items-center justify-center w-full">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let projects: { id: string, category: string, image: string, title: { en: string, es: string }, description: { en: string, es: string }, tags: string[] }[] = [];
+  const filterButtons = document.querySelectorAll('.category-filter');
+  const categorySelect = document.querySelector('.category-select') as HTMLSelectElement;
+  const projectsGrid = document.getElementById('projects-grid') as HTMLElement;
+  const leftArrow = document.querySelector('.left-arrow') as HTMLButtonElement;
+  const rightArrow = document.querySelector('.right-arrow') as HTMLButtonElement;
+  const projectsContainer = document.getElementById('projects-container');
+
+  const scrollAmount = 350 + 24; // card width + gap
+
+  async function loadProjects() {
+    try {
+      const response = await fetch('/api/projects');
+      if (!response.ok) {
+        throw new Error('Failed to load projects');
+      }
+      projects = await response.json();
+      renderProjects('all');
+    } catch (error) {
+      console.error('Error loading projects:', error);
+      if (projectsContainer) {
+        projectsContainer.innerHTML = `
+          <div class="flex items-center justify-center w-full text-red-500">
+            <p>Error loading projects. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  function renderProjects(category: string) {
+    if (!projectsContainer) return;
+
+    const filteredProjects = category === 'all' 
+      ? projects 
+      : projects.filter(project => project.category === category);
+
+    projectsContainer.innerHTML = filteredProjects.map(project => `
+      <div 
+        class="project-card  rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow flex-shrink-0" 
+        style="width: 350px;"
+        data-category="${project.category}"
+      >
+        <a href="/projects/${project.id}" class="block">
+          <img src="${project.image}" alt="${project.title.en}" class="w-full h-48 object-cover" />
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2 min-h-[56px]">
+              <span class="en">${project.title.en}</span>
+              <span class="es hidden">${project.title.es}</span>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 min-h-[80px]">
+              <span class="en">${project.description.en}</span>
+              <span class="es hidden">${project.description.es}</span>
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4 min-h-[32px]">
+              ${project.tags.map(tag => `
+                <span class="px-3 py-1 border-1 dark:border-[color:var(--color-primary)]  rounded-full text-sm">
+                  ${tag}
+                </span>
+              `).join('')}
+            </div>
+            <div class="flex justify-end min-h-[24px]">
+              <span class="text-primary-light dark:text-primary-dark inline-flex items-center">
+                <span class="en">View Details</span>
+                <span class="es hidden">Ver Detalles</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    `).join('');
+
+    // Reset scroll position and update arrows
+    if (projectsGrid) {
+      projectsGrid.scrollTo({ left: 0, behavior: 'smooth' });
+      setTimeout(updateArrowStates, 300);
+    }
+
+    // Update language display
+    const currentLang = localStorage.getItem('language') || 'en';
+    document.querySelectorAll('.en, .es').forEach(el => {
+      el.classList.toggle('hidden', el.classList.contains(currentLang) ? false : true);
+    });
+  }
+
+  function updateArrowStates() {
+    if (projectsGrid) {
+      const { scrollLeft, scrollWidth, clientWidth } = projectsGrid;
+      leftArrow.disabled = scrollLeft <= 0;
+      rightArrow.disabled = scrollLeft >= scrollWidth - clientWidth - 10;
+      
+      // Update arrow opacity
+      leftArrow.style.opacity = leftArrow.disabled ? '0.3' : '';
+      rightArrow.style.opacity = rightArrow.disabled ? '0.3' : '';
+    }
+  }
+
+  // Initialize arrow states
+  updateArrowStates();
+
+  // Add scroll event listener
+  projectsGrid?.addEventListener('scroll', updateArrowStates);
+
+  // Arrow click handlers
+  leftArrow?.addEventListener('click', () => {
+    if (!leftArrow.disabled) {
+      projectsGrid.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  });
+
+  rightArrow?.addEventListener('click', () => {
+    if (!rightArrow.disabled) {
+      projectsGrid.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  });
+
+  // Desktop filter buttons
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category');
+      if (category) {
+        filterButtons.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-category') === category);
+        });
+        if (categorySelect) {
+          categorySelect.value = category;
+        }
+        renderProjects(category);
+      }
+    });
+  });
+
+  // Mobile category select
+  categorySelect?.addEventListener('change', () => {
+    const category = categorySelect.value;
+    filterButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-category') === category);
+    });
+    renderProjects(category);
+  });
+
+  // Add keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && !leftArrow.disabled) {
+      leftArrow.click();
+    } else if (e.key === 'ArrowRight' && !rightArrow.disabled) {
+      rightArrow.click();
+    }
+  });
+
+  // Update arrows on window resize
+  window.addEventListener('resize', updateArrowStates);
+
+  // Load projects when the component mounts
+  loadProjects();
+
+  // Set initial active state for "All" category
+  const allButton = document.querySelector('.category-filter[data-category="all"]');
+  if (allButton) {
+    allButton.classList.add('active');
+  }
+</script>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-arrow {
+    transition: all 0.3s ease;
+  }
+  
+  .scroll-arrow:hover:not(:disabled) {
+    transform: translateY(-50%) scale(1.1);
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .dark .scroll-arrow:hover:not(:disabled) {
+    background-color: var(--color-primary);
+  }
+
+  .category-filter.active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+</style>
