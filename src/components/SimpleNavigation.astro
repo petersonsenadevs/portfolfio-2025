@@ -1,0 +1,22 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageToggle from './LanguageToggle.astro';
+---
+
+<nav class="fixed top-0 left-0 w-full bg-background/80 backdrop-blur-sm z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0">
+        <a href="/" class="text-xl font-bold text-primary">Peterson Sena</a>
+      </div>
+
+      <!-- Theme and Language Toggles -->
+      <div class="flex items-center gap-2">
+        <LanguageToggle />
+       
+    
+      </div>
+    </div>
+  </div>
+</nav>

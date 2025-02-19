@@ -1,0 +1,113 @@
+---
+import Modal from '../Modal.astro';
+---
+
+<section id="skills" class="py-20 ">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4 min-h-[36px]">
+        <span class="en">My Skills</span>
+        <span class="es hidden">Mis Habilidades</span>
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-12 min-h-[28px]">
+        <span class="en">Technologies I work with</span>
+        <span class="es hidden">Tecnologías con las que trabajo</span>
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="skills-container">
+      <!-- Loading spinner -->
+      <div class="col-span-full flex justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+      </div>
+    </div>
+  </div>
+
+  <Modal id="skill-modal" />
+</section>
+
+<script>
+  async function loadSkills() {
+    const skillsContainer = document.getElementById('skills-container');
+    if (!skillsContainer) return;
+
+    try {
+      const response = await fetch('/api/skills');
+      if (!response.ok) {
+        throw new Error('Failed to load skills');
+      }
+      
+      const skills = await response.json();
+      
+      // Agrupar habilidades por categoría sin TypeScript
+      const skillsByCategory = skills.reduce((acc: { [key: string]: any[] }, skill: any) => {
+        if (!acc[skill.category]) {
+          acc[skill.category] = [];
+        }
+        acc[skill.category].push(skill);
+        return acc;
+      }, {});
+
+      // Verificar que hay datos antes de hacer map()
+      skillsContainer.innerHTML = Object.entries(skillsByCategory)
+        .map(([category, items]) => {
+          if (!Array.isArray(items)) return ''; // Evitar error si items no es un array
+
+          return `
+           <div class="p-6 rounded-lg shadow-md">
+  <h3 class="text-xl font-semibold mb-4">${category}</h3>
+  <div class="grid grid-cols-2 gap-4">
+    ${items.map(skill => `
+      <button 
+        class="skill-button flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors cursor-pointer group"
+        data-skill="${skill.name}"
+        data-description-en="${skill.description.en}"
+        data-description-es="${skill.description.es}"
+      >
+        <img 
+          src="${skill.icon}" 
+          alt="${skill.name}" 
+          class="w-8 h-8 object-contain  transition-transform group-hover:scale-110" " 
+        />
+        <span class="text-sm text-center">${skill.name}</span>
+      </button>
+    `).join('')}
+  </div>
+</div>
+
+          `;
+        }).join('');
+
+      setupSkillButtons();
+    } catch (error) {
+      console.error('Error loading skills:', error);
+      skillsContainer.innerHTML = `
+        <div class="col-span-full flex justify-center text-red-500">
+          <p>Error loading skills. Please try again later.</p>
+        </div>
+      `;
+    }
+  }
+
+  function setupSkillButtons() {
+    document.querySelectorAll('.skill-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = document.getElementById('skill-modal');
+        const modalTitle = modal?.querySelector('#modal-title');
+        const modalContent = modal?.querySelector('#modal-content');
+
+        const skillName = button.getAttribute('data-skill');
+        const lang = localStorage.getItem('language') || 'en';
+        const description = button.getAttribute(`data-description-${lang}`);
+
+        if (modal && modalTitle && modalContent) {
+          modalTitle.textContent = skillName;
+          modalContent.textContent = description;
+          modal.classList.remove('hidden');
+          document.body.classList.add('overflow-hidden');
+        }
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadSkills);
+</script>

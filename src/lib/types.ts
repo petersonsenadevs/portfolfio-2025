@@ -61,5 +61,6 @@ export interface SkillFromDB {
   category: string;
   description_en: string;
   description_es: string;
+  
 }
 
