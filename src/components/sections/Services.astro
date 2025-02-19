@@ -1,0 +1,69 @@
+---
+import { translations } from '../../i18n/translations';
+
+const services = [
+  {
+    title: { en: translations.services.services_stack.web.title.en, es: translations.services.services_stack.web.title.es },
+    description: {
+      en:translations.services.services_stack.web.description.en,
+      es: translations.services.services_stack.web.description.es
+    },
+    icon: "💻"
+  },
+  {
+    title: { en:translations.services.services_stack.backend.title.en , es: translations.services.services_stack.backend.title.es },
+    description: {
+      en: translations.services.services_stack.backend.description.en,
+      es: translations.services.services_stack.backend.description.es
+    },
+    icon: "⚙️"
+  },
+  {
+    title: { en: translations.services.services_stack.mobile.title.en, es: translations.services.services_stack.mobile.title.es },
+    description: {
+      en: translations.services.services_stack.mobile.description.en,
+      es: translations.services.services_stack.mobile.description.es
+    },
+    icon: "📱"
+  },
+  {
+    title: { en: translations.services.services_stack.design.title.en, es: translations.services.services_stack.design.title.es },
+    description: {
+      en: translations.services.services_stack.design.description.en,
+      es: translations.services.services_stack.design.description.es
+    },
+    icon: "🎨"
+  },
+ 
+];
+---
+i
+<section id="services" class="py-20  ">
+  <div class="max-w-7xl mx-auto   px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4 min-h-[36px]">
+        <span class="en">{translations.services.title_services.en}</span>
+        <span class="es hidden">{translations.services.title_services.es}</span>
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-12 min-h-[28px]">
+        <span class="en">Comprehensive solutions for your digital needs</span>
+        <span class="es hidden">Soluciones integrales para tus necesidades digitales</span>
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center ">
+      {services.map(service => (
+        <div class=" dark:bg-[color:var(--color-background-alt)] p-6 rounded-lg shadow-md h-full ">
+          <div class="text-4xl mb-4 animate-bounce transform">{service.icon}</div>
+          <h3 class="text-xl font-semibold mb-2 min-h-[56px]">
+            <span class="en">{service.title.en}</span>
+            <span class="es hidden">{service.title.es}</span>
+          </h3>
+          <p class=" min-h-[80px]">
+            <span class="en">{service.description.en}</span>
+            <span class="es hidden">{service.description.es}</span>
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
