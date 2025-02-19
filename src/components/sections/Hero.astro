@@ -1,0 +1,55 @@
+---
+import { translations } from '../../i18n/translations';
+import Image from 'astro/components/Image.astro';
+---
+<section id="home" class="relative min-h-screen flex items-center justify-center py-20">
+  <!-- Hero background image -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="/assets/porfo.webp"
+      alt="Developers working"
+      class="w-full h-full object-cover"
+    />
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black/50"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+    <h1 class="text-4xl sm:text-6xl font-bold mb-6">
+
+      <span class="en">{translations.hero.title.en}</span>
+      <span class="es hidden">{translations.hero.title.es}</span>
+    </h1>
+    <p class="text-xl sm:text-2xl mb-8 text-gray-200">
+      <span class="en">{translations.hero.subtitle.en}</span>
+      <span class="es hidden">{translations.hero.subtitle.es}</span>
+    </p>
+    <div class="flex justify-center gap-4">
+      <button
+        onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })"
+        class="px-8 py-3 bg-[color:var(--color-primary)] dark:[color:var(--color-background-alt)] text-white rounded-lg hover:opacity-90 transition-opacity"
+      >
+        <span class="en">{translations.hero.buttons.contact.en}</span>
+        <span class="es hidden">{translations.hero.buttons.contact.es}</span>
+      </button>
+      <button
+        onclick="document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })"
+        class="px-8 py-3 border-2 border-white text-white rounded-lg hover:bg-white/20 transition-colors"
+      >
+        <span class="en">{translations.hero.buttons.projects.en}</span>
+        <span class="es hidden">{translations.hero.buttons.projects.es}</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { currentLang } from '../../i18n/store';
+
+  // Update translations when language changes
+  currentLang.subscribe(lang => {
+    document.querySelectorAll('.en, .es').forEach(el => {
+      el.classList.toggle('hidden', el.classList.contains(lang) ? false : true);
+    });
+  });
+</script>
