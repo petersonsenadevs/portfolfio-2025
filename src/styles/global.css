@@ -3,13 +3,13 @@
 
 
 /* Custom Fonts */
-/* @font-face {
-  font-family: 'Inter';
+@font-face {
+  font-family: 'space-grotesk';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/inter-var-latin.woff2') format('woff2');
-} */
+  src: url('/fonts/inter-var.woff2') format('woff2');
+} 
 
 /* Theme Colors */
 :root {
@@ -51,7 +51,7 @@
   --color-primary: #7DD3E0;
   --color-primary-hover: #5BA3AD;
   --color-primary-light: #A5E4ED;
-  --color-primary-dark: #3bb7ca;
+  --color-primary-dark: rgb(4, 104, 119);
   
   /* Background Colors */
   --color-background: #111827;
@@ -80,8 +80,7 @@
 *, *::before, *::after {
   transition: background-color 0.1s ease-out,
               border-color 0.1s ease-out,
-              color 0.1s ease-out,
-              fill 0.1s ease-out,
+          
               stroke 0.1s ease-out,
               opacity 0.1s ease-out,
               box-shadow 0.1s ease-out;
@@ -219,71 +218,3 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Footer */
-.footer-social-link {
-  color: var(--color-text-lighter);
-  transition: color 0.2s ease;
-}
-
-.footer-social-link:hover {
-  color: var(--color-primary);
-}
-
-/* Theme Toggle */
-.theme-toggle-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  transition: transform 0.2s ease;
-}
-
-.theme-toggle-icon.active {
-  transform: rotate(180deg);
-}
-
-/* Language Toggle */
-.language-toggle {
-  z-index: 50;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--color-background-alt);
-  transition: background-color 0.2s ease;
-}
-
-.language-toggle:hover {
-  background-color: var(--color-background-hover);
-}
-
-/* Form Elements */
-.form-input {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-background);
-  color: var(--color-text);
-  transition: all 0.2s ease;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
-}
-
-.form-button {
-  width: 100%;
-  padding: 0.75rem 2rem;
-  background-color: var(--color-primary);
-  color: var(--color-background);
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.form-button:hover {
-  background-color: var(--color-primary-hover);
-}

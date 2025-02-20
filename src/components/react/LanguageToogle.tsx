@@ -17,7 +17,7 @@ const LanguageToggleReact = () => {
   return (
     <button
       id="language-toggle"
-      className="z-50 inline-flex items-center justify-center w-10 h-10 p-2 rounded-lg bg-[color:var(--color-background-alt)] hover:[color:var(--color-primary)] hover:border-1 transition-colors"
+      className="z-50 inline-flex items-center justify-center w-20 h-10 p-2 rounded-lg bg-[color:var(--color-background-alt)] hover:[color:var(--color-primary)] hover:border-1 transition-colors"
       aria-label="Toggle language"
       onClick={() => setLanguage(lang === 'en' ? 'es' : 'en')}
     >
