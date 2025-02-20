@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 
+
 /* Custom Fonts */
 /* @font-face {
   font-family: 'Inter';
@@ -23,7 +24,7 @@
   /* Background Colors */
   --color-background: #FFFFFF;
   --color-background-alt: #F3F4F6;
-  --color-background-hover: #E5E7EB;
+  --color-background-hover: #e5e8eb;
   
   /* Text Colors */
   --color-text: #1f3637;
@@ -32,7 +33,7 @@
   
   /* Border Colors */
   --color-border: #0075a7;
-  --color-border-hover: #dbd7d1;
+  --color-border-hover: #1971cf;
   
   /* Scrollbar Colors */
   --scrollbar-color: var(--color-primary);

@@ -1,0 +1,109 @@
+---
+import { translations } from '../../i18n/translations';
+---
+
+<section id="contact" class="py-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold mb-4">
+        <span class="en">{translations.contact.title.en}</span>
+        <span class="es hidden">{translations.contact.title.es}</span>
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-12">
+        <span class="en">{translations.contact.subtitle.en}</span>
+        <span class="es hidden">{translations.contact.subtitle.es}</span>
+      </p>
+    </div>
+    <form id="contactForm" class="space-y-6">
+      <div>
+        <label for="name" class="block text-sm font-medium mb-2">
+          <span class="en">{translations.contact.form.name.en}</span>
+          <span class="es hidden">{translations.contact.form.name.es}</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent"
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium mb-2">
+          <span class="en">{translations.contact.form.email.en}</span>
+          <span class="es hidden">{translations.contact.form.email.es}</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent"
+        />
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium mb-2">
+          <span class="en">{translations.contact.form.message.en}</span>
+          <span class="es hidden">{translations.contact.form.message.es}</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows="4"
+          required
+          class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:border-transparent"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="w-full px-8 py-3 border bg-[color:var(--color-primary)] text-white dark:bg-[color:var(--color-primary-dark)] rounded-lg hover:opacity-90 transition-opacity"
+      >
+        <span class="en">{translations.contact.form.submit.en}</span>
+        <span class="es hidden">{translations.contact.form.submit.es}</span>
+      </button>
+    </form>
+    <div id="responseMessage" class="mt-4 hidden text-green-500"></div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const responseMessage = document.getElementById('responseMessage');
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form as HTMLFormElement);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message')
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (responseMessage) {
+        responseMessage.textContent = result.message || result.error;
+        responseMessage.classList.remove('hidden');
+      }
+      if (responseMessage) {
+        responseMessage.textContent = result.message || result.error;
+        responseMessage.classList.remove('hidden');
+      }
+    
+    }catch (error) {
+      console.error('Error:', error);
+    }
+  });
+</script>
+
+
+

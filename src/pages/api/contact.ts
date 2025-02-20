@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (request.headers.get("content-type") === "application/json") {
     const body = await request.json();
 
-    const { email, name } = body; // Asegúrate de recibir el nombre
+    const { email, name,  } = body; // Asegúrate de recibir el nombre
 
     const BREVO_API_URL = "https://api.brevo.com/v3/contacts";
     const BREVO_API_KEY =
@@ -44,8 +44,8 @@ export const POST: APIRoute = async ({ request }) => {
 
         // Enviar el correo al destinatario especificado
         const emailPayload = {
-          sender: { name: "Tu Nombre", email: "petersonsena24@gmail.com" }, // Tu correo
-          to: [{ email: "petersonsena24@gmail.com" }], // Correo a donde se reenviará el mensaje
+          sender: { name: "Tu Nombre", email: import.meta.env.EMAIL_BREVO_ACCOUNT }, // Tu correo
+          to: [{ email: import.meta.env.EMAIL_BREVO_SEND }], // Correo a donde se reenviará el mensaje
           subject: "Nuevo mensaje de contacto",
           htmlContent: `<p><strong>Nombre:</strong> ${name}</p>
                         <p><strong>Correo:</strong> ${email}</p>

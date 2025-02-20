@@ -1,8 +1,8 @@
 ---
-import Footer from '../components/Footer.astro';
-import Navigation from '../components/Navigation.astro';
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
 
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -15,33 +15,48 @@ const { title } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Peterson Sena | Desarrollador Web, Desarrollador Backend" />
+    <meta
+      name="description"
+      content="Peterson Sena | Desarrollador Web, Desarrollador Backend"
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"
+    />
     <script is:inline>
-      const theme = localStorage.getItem('theme') || 'system';
-      const isDark = theme === 'dark' || 
-        (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      
+      const theme = localStorage.getItem("theme") || "system";
+      const isDark =
+        theme === "dark" ||
+        (theme === "system" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+
       if (isDark) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add("dark");
       }
-      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute("data-theme", theme);
     </script>
   </head>
   <body>
     <Navigation />
     <slot />
-   <Footer /> 
+    <Footer />
     <script>
-      document.documentElement.classList.add('preload');
-      window.addEventListener('load', () => {
+      document.documentElement.classList.add("preload");
+      window.addEventListener("load", () => {
         setTimeout(() => {
-          document.documentElement.classList.remove('preload');
+          document.documentElement.classList.remove("preload");
         }, 200);
       });
     </script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"
+    ></script>
+
   </body>
 </html>
