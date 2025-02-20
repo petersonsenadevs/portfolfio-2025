@@ -166,11 +166,14 @@ body {
 
 /* Skills Section */
 .skill-button:hover img {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .skill-button img {
   transition: all 0.2s ease-in-out;
+  width: 2rem !important; /* 8px * 2 = 16px */
+  height: 2rem !important;
+  object-fit: contain;
 }
 
 /* Project Cards */
