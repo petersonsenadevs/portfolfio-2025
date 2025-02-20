@@ -9,7 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.2.1",
+    "@astrojs/netlify": "^6.2.0",
     "@astrojs/react": "^4.2.0",
+    "@astrojs/vercel": "^8.0.7",
     "@nanostores/react": "^0.8.4",
     "@supabase/supabase-js": "^2.48.1",
     "@types/react": "^19.0.10",
@@ -20,6 +23,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@jridgewell/sourcemap-codec": "^1.5.0",
+    "@rollup/plugin-inject": "^5.0.5",
     "@tailwindcss/vite": "^4.0.7",
     "tailwindcss": "^4.0.7"
   }
