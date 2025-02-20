@@ -1,0 +1,78 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div
+  id={id}
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+>
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-black/50 bg-opacity-50 transition-opacity"></div>
+
+  <!-- Modal -->
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div class="relative transform overflow-hidden rounded-lg bg-[color:var(--color-background)]  text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div class="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+              <h3 class="text-xl font-semibold leading-6" id="modal-title"></h3>
+              <div class="mt-4">
+                <p class="" id="modal-content"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-[color:var(--color-background)]  px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+          <button
+            type="button"
+            class="close-modal mt-3 inline-flex w-full justify-center rounded-md  px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:ring-gray-600  sm:mt-0 sm:w-auto"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupModal(modalId: string) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    const closeButtons = modal.querySelectorAll('.close-modal');
+    const backdrop = modal.querySelector('.bg-black');
+
+    function closeModal() {
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', closeModal);
+    });
+
+    backdrop?.addEventListener('click', closeModal);
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  }
+
+  // Initialize all modals on the page
+  document.querySelectorAll('[role="dialog"]').forEach(modal => {
+    setupModal(modal.id);
+  });
+</script>

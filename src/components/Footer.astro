@@ -3,6 +3,7 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="w-full py-6 mt-20">
+  <pixel-canvas data-gap="10" data-speed="25" data-colors="#e0f2fe, #7dd3fc, #0ea5e9"></pixel-canvas>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-center gap-6">
       <div class="flex gap-8">
@@ -10,7 +11,7 @@ const currentYear = new Date().getFullYear();
           href="https://github.com/petersonsenadevs" 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="text-gray-400/50 hover:text-primary-light dark:hover:text-primary-dark transition-colors"
+          class="text-gray-400/50 hover:text-[color:var(--color-primary)] dark:hover:text-[color:var(--color-primary-light)] transition-colors"
         >
           <span class="sr-only">GitHub</span>
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -21,7 +22,7 @@ const currentYear = new Date().getFullYear();
           href="https://linkedin.com/in/peterson-sena" 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="text-gray-400/50 hover:text-primary-light dark:hover:text-primary-dark transition-colors"
+          class="text-gray-400/50 hover:text-[color:var(--color-primary)] dark:hover:text-[color:var(--color-primary-light)] transition-colors"
         >
           <span class="sr-only">LinkedIn</span>
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -30,7 +31,7 @@ const currentYear = new Date().getFullYear();
         </a>
         <a 
           href="mailto:petersonsena24@example.com" 
-          class="text-gray-400/50 hover:text-primary-light dark:hover:text-primary-dark transition-colors"
+          class="text-gray-400/50 hover:text-[color:var(--color-primary)] dark:hover:text-[color:var(--color-primary-light)]transition-colors"
         >
           <span class="sr-only">Email</span>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
